@@ -25,15 +25,15 @@ resource "aws_s3_bucket_website_configuration" "bucket" {
 # }
 
 #
-resource "aws_s3_bucket_ownership_controls" "example" {
-  bucket = aws_s3_bucket.example.id
+resource "aws_s3_bucket_ownership_controls" "bucket" {
+  bucket = aws_s3_bucket.bucket.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
 
-resource "aws_s3_bucket_public_access_block" "example" {
-  bucket = aws_s3_bucket.example.id
+resource "aws_s3_bucket_public_access_block" "bucket" {
+  bucket = aws_s3_bucket.bucket.id
 
   block_public_acls       = false
   block_public_policy     = false
@@ -41,13 +41,13 @@ resource "aws_s3_bucket_public_access_block" "example" {
   restrict_public_buckets = false
 }
 
-resource "aws_s3_bucket_acl" "example" {
+resource "aws_s3_bucket_acl" "bucket" {
   depends_on = [
-    aws_s3_bucket_ownership_controls.example,
-    aws_s3_bucket_public_access_block.example,
+    aws_s3_bucket_ownership_controls.bucket,
+    aws_s3_bucket_public_access_block.bucket,
   ]
 
-  bucket = aws_s3_bucket.example.id
+  bucket = aws_s3_bucket.bucket.id
   acl    = "public-read"
 }
 
